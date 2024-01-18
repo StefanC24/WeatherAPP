@@ -1,5 +1,5 @@
 import './App.css'
-import {useEffect, useState} from 'react'
+import {useState} from 'react'
 
 function App() {
   const [cityInput, setCity] = useState("Atherstone")
@@ -12,6 +12,48 @@ function App() {
   const [sunrise, setSunrise] = useState(null)
   const [sunset, setSunset] = useState(null)
   const [windDirection, setWindDirection] = useState(null)
+
+  const weatherIcons = {
+    "Thunderstorm with light rain" : "Thunderstorm with rain.png",
+    "Thunderstorm with rain" : "Thunderstorm with rain.png",
+    "Thunderstorm with heavy rain.png" : "Thunderstorm with rain.png",
+    "Thunderstorm with light drizzle" : "Thunderstorm with light drizzle.png",
+    "Thunderstorm with drizzle" : "Thunderstorm with light drizzle.png",
+    "Thunderstorm with heavy drizzle" : "Thunderstorm with light drizzle.png",
+    "Thunderstorm with Hail" : "Thunderstorm with light drizzle.png",
+    "Light Drizzle" : "Light Drizzle.png",
+    "Drizzle" : "Light Drizzle.png",
+    "Heavy Drizzle" : "Light Drizzle.png",
+    "Light Rain" : "Light Rain.png",
+    "Moderate Rain" : "Light Rain.png",
+    "Heavy Rain" : "Heavy Rain.png",
+    "Freezing rain" : "Light Rain.png",
+    "Light shower rain" : "Light Rain.png",
+    "Shower rain" : "Shower rain.png",
+    "Heavy shower rain" : "Light Rain.png",
+    "Light snow" : "Light snow.png",
+    "Snow" : "Snow.png",
+    "Heavy Snow" : "Snow.png",
+    "Mix snow/rain" : "Light snow.png",
+    "Sleet" : "Sleet.png",
+    "Heavy sleet" : "Sleet.png",
+    "Snow shower" : "Light snow.png",
+    "Heavy snow shower" : "Snow.png",
+    "Flurries" : "Flurries.png",
+    "Mist" : "Mist.png",
+    "Haze" : "Mist.png",
+    "Sand/dust" : "Mist.png",
+    "Fog" : "Mist.png",
+    "Freezing Fog" : "Mist.png",
+    "Smoke" : "Mist.png",
+    "Clear sky" : "Clear sky.png",
+    "Few clouds" : "Few clouds.png",
+    "Scattered clouds" : "Scattered clouds.png",
+    "Broken clouds" : "Broken clouds.png",
+    "Overcast clouds" : "Overcast clouds.png",
+    "Unknown Precipitation" : "Unknown Precipitation.png"
+  }
+
   const handleInputValue = (e) =>{
     setCity(e.target.value)
   }
@@ -40,9 +82,17 @@ function App() {
       })
       .catch((error)=> console.error(`Error fetching data:`, error))
       };
-    fetchData()
-    setData("")
-  }
+
+      console.log(weatherIcons[weather])
+
+      if (weather in weatherIcons){
+        document.getElementById("icon_weather").src = `${process.env.PUBLIC_URL}/icons/${weatherIcons[weather]}`
+      }
+
+      fetchData()
+      setData("")
+    }
+    
 
   return (
     <div className='app'>
@@ -54,7 +104,7 @@ function App() {
       <div className="cityName">{data}</div>
       <div className='results'>
         <div className='temperature_icon'>
-          <img className='icon_weather' src={process.env.PUBLIC_URL + '/icons/moon_stars.png'}></img>
+          <img className='icon_weather' id="icon_weather"></img>
           <div className='weather_info'>
             <p className="temperature">{temperature}°</p>
             <p className="weather">{weather}</p>
