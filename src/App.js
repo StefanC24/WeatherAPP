@@ -7,6 +7,7 @@ function App() {
   const apiUrl = `https://api.weatherbit.io/v2.0/current?`
   const apiKey = "adfed9b5d49f454da5c0d1660059c55d"
   const [data, setData] = useState(null)
+  const [countryCode, setCountryCode] = useState(null)
   const [weather, setWeather] = useState(null)
   const [temperature, setTemperature] = useState(null)
   const [sunrise, setSunrise] = useState(null)
@@ -74,6 +75,7 @@ function App() {
       .then((result) =>{
         console.log(result)
         setData(result.data[0].city_name)
+        setCountryCode(result.data[0].country_code)
         setWeather(result.data[0].weather.description)
         setTemperature(result.data[0].temp)
         setSunrise(result.data[0].sunrise)
@@ -101,7 +103,7 @@ function App() {
         <input className="cityInput" type="text" placeholder="Enter city" onChange={handleInputValue}></input>
         <button title='search button' type='button' className='search_button' onClick={changeValue}></button>
       </div>
-      <div className="cityName">{data}</div>
+      <div className="cityName">{data}, {countryCode}</div>
       <div className='results'>
         <div className='temperature_icon'>
           <img className='icon_weather' id="icon_weather"></img>
